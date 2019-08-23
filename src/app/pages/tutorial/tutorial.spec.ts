@@ -35,7 +35,7 @@ describe('TutorialPage', () => {
   });
 
   it('should check the tutorial status', async () => {
-    const didTuts = await app.storage.get('ion_did_tutorial');
+    const didTuts = await app.storage.get('seen_welcome_msg');
     expect(didTuts).toBeFalsy();
   });
 });

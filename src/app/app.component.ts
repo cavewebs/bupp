@@ -20,24 +20,24 @@ import { UserData } from './providers/user-data';
 export class AppComponent implements OnInit {
   appPages = [
     {
-      title: 'Schedule',
+      title: 'Airtime Topup',
       url: '/app/tabs/schedule',
-      icon: 'calendar'
+      icon: 'call'
     },
     {
-      title: 'Speakers',
+      title: 'Buy Data',
       url: '/app/tabs/speakers',
-      icon: 'contacts'
+      icon: 'globe'
     },
     {
-      title: 'Map',
+      title: 'Subscribe Cable TV',
       url: '/app/tabs/map',
-      icon: 'map'
+      icon: 'tv'
     },
     {
-      title: 'About',
+      title: 'Buy Electricity Units',
       url: '/app/tabs/about',
-      icon: 'information-circle'
+      icon: 'bulb'
     }
   ];
   loggedIn = false;
@@ -119,7 +119,7 @@ export class AppComponent implements OnInit {
 
   openTutorial() {
     this.menu.enable(false);
-    this.storage.set('ion_did_tutorial', false);
+    this.storage.set('seen_welcome_msg', false);
     this.router.navigateByUrl('/tutorial');
   }
 }

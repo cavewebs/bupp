@@ -1,78 +1,105 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-toggle> 
+        <img src="assets/img/appicon.png">
+
+      </ion-menu-toggle>
     </ion-buttons>
 
-    <ion-segment [(ngModel)]="segment" (ionChange)="updateSchedule()">
-      <ion-segment-button value="all">
-        All
-      </ion-segment-button>
-      <ion-segment-button value="favorites">
-        Favorites
-      </ion-segment-button>
-    </ion-segment>
+    <ion-title color="primary">Buy Airtime</ion-title>
 
     <ion-buttons slot="end">
       <ion-button (click)="presentFilter()">
-        <ion-icon slot="icon-only" name="options"></ion-icon>
+        <img src="assets/img/speakers/puppy.jpg" class="menu-img">
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-
-  <ion-toolbar>
-    <ion-searchbar [(ngModel)]="queryText" (ionChange)="updateSchedule()" placeholder="Search"></ion-searchbar>
-  </ion-toolbar>
 </ion-header>
-<ion-content>
-  <ion-list #scheduleList [hidden]="shownSessions === 0">
-    <ion-item-group *ngFor="let group of groups" [hidden]="group.hide">
-      <ion-item-divider sticky>
-        <ion-label>
-          {{group.time}}
-        </ion-label>
-      </ion-item-divider>
 
-      <ion-item-sliding *ngFor="let session of group.sessions" #slidingItem [attr.track]="session.tracks[0] | lowercase" [hidden]="session.hide">
-        <ion-item routerLink="/app/tabs/schedule/session/{{session.id}}">
-          <ion-label>
-            <h3>{{session.name}}</h3>
-            <p>
-              {{session.timeStart}} &mdash; {{session.timeEnd}}: {{session.location}}
-            </p>
-          </ion-label>
-        </ion-item>
-        <ion-item-options>
-          <ion-item-option color="favorite" (click)="addFavorite(slidingItem, session)" *ngIf="segment === 'all'">
-            Favorite
-          </ion-item-option>
-          <ion-item-option color="danger" (click)="removeFavorite(slidingItem, session, 'Remove Favorite')" *ngIf="segment === 'favorites'">
-            Remove
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-item-group>
+<ion-content class="outer-content">
+  <ion-list>
+    <ion-grid fixed>
+      <ion-row class="ion-align-items-stretch">
+        <ion-col size="12" size-md="6" >
+          
+          <form>
+             <ion-item>
+              <ion-label>Favourites </ion-label>
+            </ion-item>
+            <ion-item>
+               <ion-button> Self
+                <ion-icon name="contact" slot="end"></ion-icon>
+              </ion-button>
+              <ion-button> Dad
+                <ion-icon name="contact" slot="end"></ion-icon>
+              </ion-button>
+
+              </ion-item>
+            <ion-item>
+              <ion-label position="stacked">Mobile Number</ion-label>
+              <ion-input type="number" placeholder="080312345678"></ion-input>
+              <ion-icon name="call" slot="end"></ion-icon>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Network Operator</ion-label>
+              <ion-select placeholder="Select One">
+                <ion-select-option value="f">MTN</ion-select-option>
+                <ion-select-option value="m">GLO</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+             <ion-item class="amount" >
+                <ion-label position="stacked">Amount</ion-label>
+                <ion-icon color="primary" slot="start" name="remove" style="display: inline"></ion-icon>
+                <ion-input type="number" placeholder="200" style="" ></ion-input>
+                <ion-icon color="primary" slot="end" name="add" style="margin-left: -200px !important"></ion-icon>
+              </ion-item>
+              <ion-item>
+                <ion-checkbox checked name="useBpBalance" slot="start" color="primary"></ion-checkbox>
+                <label position="stacked"> Use My Bills Padi Balance</label>
+              </ion-item>
+
+          </form>
+            <ion-item>
+                <ion-icon slot="end" color="primary" name="basket"></ion-icon>
+                <ion-label>Get upto 5% cashback <br /> 
+                  When you pay bills using your <br />
+                  Bills Padi App Balance <br />
+                  <ion-button fill="outline" >Top Up Now </ion-button>
+                  </ion-label>
+              </ion-item>
+          <ion-list>
+            <ion-list-header>
+              Recent Transactions
+            </ion-list-header>
+
+            <ion-item>
+              <ion-avatar slot="start">
+                <img src="assets/img/speakers/puppy.jpg">
+              </ion-avatar>
+              <ion-label>
+                <h2>MTN TOP UP</h2>
+                <h3>Self</h3>
+                <p><span color="primary">Amount:</span> N400 <> <b>Cashback:</b> N8.00</p>
+              </ion-label>
+            </ion-item>
+
+            <ion-item>
+              <ion-avatar slot="start">
+                <img src="assets/img/speakers/rabbit.jpg">
+              </ion-avatar>
+              <ion-label>
+                <h2>Airtel Top Up</h2>
+                <h3>Wifey</h3>
+                <p><span color="primary">Amount:</span> N1500 <> <b>Cashback:</b> N30.00</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-list>
 
-  <ion-list-header [hidden]="shownSessions > 0">
-    No Sessions Found
-  </ion-list-header>
-
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end" #fab>
-    <ion-fab-button><ion-icon name="share"></ion-icon></ion-fab-button>
-    <ion-fab-list side="top">
-      <ion-fab-button color="vimeo" (click)="openSocial('Vimeo', fab)">
-        <ion-icon name="logo-vimeo"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button color="google" (click)="openSocial('Google+', fab)">
-        <ion-icon name="logo-googleplus"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button color="twitter" (click)="openSocial('Twitter', fab)">
-        <ion-icon name="logo-twitter"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button color="facebook" (click)="openSocial('Facebook', fab)">
-        <ion-icon name="logo-facebook"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
 </ion-content>

@@ -24,7 +24,7 @@ export class TutorialPage {
   startApp() {
     this.router
       .navigateByUrl('/app/tabs/schedule')
-      .then(() => this.storage.set('ion_did_tutorial', true));
+      .then(() => this.storage.set('seen_welcome_msg', true));
   }
 
   onSlideChangeStart(event) {
@@ -34,7 +34,7 @@ export class TutorialPage {
   }
 
   ionViewWillEnter() {
-    this.storage.get('ion_did_tutorial').then(res => {
+    this.storage.get('seen_welcome_msg').then(res => {
       if (res === true) {
         this.router.navigateByUrl('/app/tabs/schedule');
       }
